@@ -16,7 +16,10 @@ function Ledger({ title, rows }: { title: string; rows: { title: string; detail:
             className="flex items-baseline gap-4 border-b border-line py-4"
           >
             <span className="text-[1.0625rem] text-ink">{r.title}</span>
-            <span aria-hidden="true" className="min-w-6 flex-1 translate-y-[-0.25em] border-b border-dotted border-line-strong" />
+            <span
+              aria-hidden="true"
+              className="min-w-6 flex-1 translate-y-[-0.25em] border-b border-dotted border-line-strong"
+            />
             <span className="text-right font-mono text-xs text-muted">{r.detail}</span>
           </Reveal>
         ))}
@@ -34,7 +37,12 @@ export default function Leadership() {
         aria-labelledby="leadership-title"
         className="mx-auto max-w-[90rem] px-5 py-20 sm:px-8 sm:py-24 lg:px-12"
       >
-        <SectionHeader index="05" label="Leadership" title={leadership.heading} id="leadership-title" />
+        <SectionHeader
+          index="05"
+          label="Leadership"
+          title={leadership.heading}
+          id="leadership-title"
+        />
         <div className="mt-14 grid gap-12 md:grid-cols-2 lg:ml-[25%] lg:mt-16 lg:gap-16">
           <Ledger title="Roles" rows={leadership.roles} />
           <Ledger title="Honors" rows={leadership.honors} />

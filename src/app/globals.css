@@ -275,6 +275,35 @@ section[id] {
   color: var(--bg);
 }
 
+/* Pinned horizontal projects: each slide fits a full card in the viewport. */
+.project-slide {
+  width: clamp(52rem, 68vw, 72rem);
+}
+
+/* Soft highlight that follows the pointer on tilted cards. */
+.tilt {
+  position: relative;
+}
+@media (hover: hover) and (pointer: fine) {
+  .tilt::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: -1rem;
+    border-radius: 4px;
+    background: radial-gradient(
+      28rem circle at var(--gx, 50%) var(--gy, 50%),
+      rgb(from var(--accent) r g b / 0.06),
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  .tilt:hover::after {
+    opacity: 1;
+  }
+}
+
 /* ------------------------------------------------------------------ *
  * Keyframes
  * ------------------------------------------------------------------ */

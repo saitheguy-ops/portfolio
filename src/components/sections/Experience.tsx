@@ -31,7 +31,9 @@ export default function Experience() {
               <Reveal delay={0.05}>
                 <p className="label !text-ink-soft">{job.org}</p>
                 <h3 className="display mt-3 text-[clamp(2rem,4vw,3.25rem)]">{job.role}</h3>
-                <p className="mt-5 max-w-3xl text-lg leading-relaxed text-ink-soft">{job.summary}</p>
+                <p className="mt-5 max-w-3xl text-lg leading-relaxed text-ink-soft">
+                  {job.summary}
+                </p>
               </Reveal>
 
               <ul className="mt-8 grid max-w-3xl gap-4">

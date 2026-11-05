@@ -1,5 +1,6 @@
 import { hero, site } from "@/content";
 import MuonField from "./MuonField";
+import { Magnetic } from "./motion/Tilt";
 
 export default function Hero() {
   const words = hero.line.split(" ");
@@ -58,19 +59,30 @@ export default function Hero() {
             style={{ "--d": "700ms" } as React.CSSProperties}
           >
             <li>
-              <a className="link-track" href={site.links.github} target="_blank" rel="noreferrer">
-                GitHub
-              </a>
+              <Magnetic strength={0.3}>
+                <a className="link-track" href={site.links.github} target="_blank" rel="noreferrer">
+                  GitHub
+                </a>
+              </Magnetic>
             </li>
             <li>
-              <a className="link-track" href={site.links.linkedin} target="_blank" rel="noreferrer">
-                LinkedIn
-              </a>
+              <Magnetic strength={0.3}>
+                <a
+                  className="link-track"
+                  href={site.links.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  LinkedIn
+                </a>
+              </Magnetic>
             </li>
             <li>
-              <a className="link-track" href={`mailto:${site.email}`}>
-                Email
-              </a>
+              <Magnetic strength={0.3}>
+                <a className="link-track" href={`mailto:${site.email}`}>
+                  Email
+                </a>
+              </Magnetic>
             </li>
           </ul>
         </div>

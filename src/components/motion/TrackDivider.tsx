@@ -47,7 +47,11 @@ export default function TrackDivider({
   const v = VARIANTS[variant % VARIANTS.length];
 
   return (
-    <div ref={ref} aria-hidden="true" className="relative mx-auto max-w-[90rem] px-5 sm:px-8 lg:px-12">
+    <div
+      ref={ref}
+      aria-hidden="true"
+      className="relative mx-auto max-w-[90rem] px-5 sm:px-8 lg:px-12"
+    >
       <svg
         viewBox="0 0 1440 130"
         preserveAspectRatio="none"

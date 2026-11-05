@@ -1,6 +1,7 @@
 import { contact, footer, site } from "@/content";
 import MuonMark from "../MuonMark";
 import { Reveal, SplitText } from "../motion/Reveal";
+import { Magnetic } from "../motion/Tilt";
 
 export default function Contact() {
   return (
@@ -27,15 +28,21 @@ export default function Contact() {
           {site.email}
         </a>
         <div className="mt-12 flex flex-wrap gap-3">
-          <a href={site.links.linkedin} target="_blank" rel="noreferrer" className="btn">
-            LinkedIn
-          </a>
-          <a href={site.links.github} target="_blank" rel="noreferrer" className="btn">
-            GitHub
-          </a>
-          <a href={site.links.resume} target="_blank" rel="noreferrer" className="btn btn-accent">
-            Resume (PDF)
-          </a>
+          <Magnetic>
+            <a href={site.links.linkedin} target="_blank" rel="noreferrer" className="btn">
+              LinkedIn
+            </a>
+          </Magnetic>
+          <Magnetic>
+            <a href={site.links.github} target="_blank" rel="noreferrer" className="btn">
+              GitHub
+            </a>
+          </Magnetic>
+          <Magnetic>
+            <a href={site.links.resume} target="_blank" rel="noreferrer" className="btn btn-accent">
+              Resume (PDF)
+            </a>
+          </Magnetic>
         </div>
       </Reveal>
 

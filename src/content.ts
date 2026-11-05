@@ -140,8 +140,7 @@ export const experience: Experience[] = [
     org: "InVita Healthcare Technologies",
     role: "AI Summer Intern",
     dates: "Jun – Aug 2026",
-    summary:
-      "Built the pipeline that moves InVita's legacy donor data into production.",
+    summary: "Built the pipeline that moves InVita's legacy donor data into production.",
     bullets: [
       "Built a Git-tracked SQL ETL pipeline that parses, cleans and validates 1M+ legacy donor records in under a second; it now runs in production.",
       "InVita's software serves 1,300+ healthcare organizations in 30+ countries.",
@@ -333,10 +332,7 @@ export const research: Research[] = [
     title: "Weighing the Milky Way with a radio telescope",
     description:
       "I mapped the Milky Way's rotation curve with a Small Radio Telescope, using Doppler shifts of the 21-cm hydrogen line. The curve stays flat far from the center, where visible matter alone says it should fall: evidence for dark matter.",
-    details: [
-      "Doppler shifts of the 21-cm H I line",
-      "Rotation curve vs. a Keplerian falloff",
-    ],
+    details: ["Doppler shifts of the 21-cm H I line", "Rotation curve vs. a Keplerian falloff"],
     figure: "rotation",
     readout: {
       label: "v ≈ 220 km/s",
@@ -378,13 +374,7 @@ export const skills = {
     },
     {
       label: "practice",
-      items: [
-        "Git",
-        "ETL / data validation",
-        "data analysis",
-        "Raspberry Pi",
-        "LLMs",
-      ],
+      items: ["Git", "ETL / data validation", "data analysis", "Raspberry Pi", "LLMs"],
     },
   ],
   readout: {

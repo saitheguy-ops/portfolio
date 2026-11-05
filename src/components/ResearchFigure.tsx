@@ -35,7 +35,13 @@ function Axes({ x, y, ticks }: { x: string; y: string; ticks: { at: number; labe
   return (
     <g fontFamily="var(--font-mono)" fontSize="10" fill="var(--muted)">
       <line x1={PAD.l} y1={PAD.t} x2={PAD.l} y2={PAD.t + ih} stroke="var(--line-strong)" />
-      <line x1={PAD.l} y1={PAD.t + ih} x2={PAD.l + iw} y2={PAD.t + ih} stroke="var(--line-strong)" />
+      <line
+        x1={PAD.l}
+        y1={PAD.t + ih}
+        x2={PAD.l + iw}
+        y2={PAD.t + ih}
+        stroke="var(--line-strong)"
+      />
       {ticks.map((t) => (
         <g key={t.label}>
           <line
@@ -69,20 +75,62 @@ export default function ResearchFigure({ kind }: { kind: "decay" | "rotation" })
     const slow = (t: number) => 0.38 * Math.exp(-t / 38);
     return (
       <figure>
-        <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label="Schematic of a pump–probe decay: the signal drops quickly, then slowly, over about 100 picoseconds.">
+        <svg
+          viewBox={`0 0 ${W} ${H}`}
+          className="w-full"
+          role="img"
+          aria-label="Schematic of a pump–probe decay: the signal drops quickly, then slowly, over about 100 picoseconds."
+        >
           <Axes
             x="pump–probe delay (ps)"
             y="ΔA"
             ticks={[0, 25, 50, 75].map((v) => ({ at: v / xmax, label: String(v) }))}
           />
-          <line x1={PAD.l} x2={PAD.l} y1={PAD.t} y2={PAD.t + ih} stroke="var(--signal)" strokeDasharray="2 4" />
-          <motion.path d={path(fast, 0, xmax, xmax, 1.05)} stroke="var(--muted)" strokeDasharray="3 5" fill="none" {...draw(0.3)} />
-          <motion.path d={path(slow, 0, xmax, xmax, 1.05)} stroke="var(--muted)" strokeDasharray="3 5" fill="none" {...draw(0.45)} />
-          <motion.path d={path((t) => fast(t) + slow(t), 0, xmax, xmax, 1.05)} stroke="var(--accent)" strokeWidth="1.8" fill="none" {...draw(0)} />
-          <text x={PAD.l + 8} y={PAD.t + 10} fontFamily="var(--font-mono)" fontSize="10" fill="var(--signal)">
+          <line
+            x1={PAD.l}
+            x2={PAD.l}
+            y1={PAD.t}
+            y2={PAD.t + ih}
+            stroke="var(--signal)"
+            strokeDasharray="2 4"
+          />
+          <motion.path
+            d={path(fast, 0, xmax, xmax, 1.05)}
+            stroke="var(--muted)"
+            strokeDasharray="3 5"
+            fill="none"
+            {...draw(0.3)}
+          />
+          <motion.path
+            d={path(slow, 0, xmax, xmax, 1.05)}
+            stroke="var(--muted)"
+            strokeDasharray="3 5"
+            fill="none"
+            {...draw(0.45)}
+          />
+          <motion.path
+            d={path((t) => fast(t) + slow(t), 0, xmax, xmax, 1.05)}
+            stroke="var(--accent)"
+            strokeWidth="1.8"
+            fill="none"
+            {...draw(0)}
+          />
+          <text
+            x={PAD.l + 8}
+            y={PAD.t + 10}
+            fontFamily="var(--font-mono)"
+            fontSize="10"
+            fill="var(--signal)"
+          >
             pump
           </text>
-          <text x={PAD.l + iw * 0.34} y={PAD.t + ih * 0.62} fontFamily="var(--font-mono)" fontSize="10" fill="var(--muted)">
+          <text
+            x={PAD.l + iw * 0.34}
+            y={PAD.t + ih * 0.62}
+            fontFamily="var(--font-mono)"
+            fontSize="10"
+            fill="var(--muted)"
+          >
             τ₁ fast · τ₂ slow
           </text>
         </svg>
@@ -102,14 +150,31 @@ export default function ResearchFigure({ kind }: { kind: "decay" | "rotation" })
   const sunY = PAD.t + ih - (observed(8.2) / ymax) * ih;
   return (
     <figure>
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label="Schematic rotation curve: orbital speed stays flat near 220 km/s far from the galactic center, instead of falling off as visible matter alone predicts.">
+      <svg
+        viewBox={`0 0 ${W} ${H}`}
+        className="w-full"
+        role="img"
+        aria-label="Schematic rotation curve: orbital speed stays flat near 220 km/s far from the galactic center, instead of falling off as visible matter alone predicts."
+      >
         <Axes
           x="radius (kpc)"
           y="v (km/s)"
           ticks={[0, 5, 10, 15].map((v) => ({ at: v / xmax, label: String(v) }))}
         />
-        <motion.path d={path(kepler, 0.05, xmax, xmax, ymax)} stroke="var(--muted)" strokeDasharray="3 5" fill="none" {...draw(0.4)} />
-        <motion.path d={path(observed, 0.05, xmax, xmax, ymax)} stroke="var(--accent)" strokeWidth="1.8" fill="none" {...draw(0)} />
+        <motion.path
+          d={path(kepler, 0.05, xmax, xmax, ymax)}
+          stroke="var(--muted)"
+          strokeDasharray="3 5"
+          fill="none"
+          {...draw(0.4)}
+        />
+        <motion.path
+          d={path(observed, 0.05, xmax, xmax, ymax)}
+          stroke="var(--accent)"
+          strokeWidth="1.8"
+          fill="none"
+          {...draw(0)}
+        />
         <motion.circle
           cx={sunX}
           cy={sunY}

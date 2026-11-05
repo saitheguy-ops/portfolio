@@ -27,10 +27,14 @@ export default function Research() {
             className="grid gap-10 border-t border-line pt-10 lg:grid-cols-12 lg:gap-8 lg:pt-14 [&:not(:first-child)]:mt-10"
           >
             <Reveal className="lg:col-span-3">
-              <p className="font-mono text-xs uppercase tracking-[0.14em] text-muted tabular">{r.dates}</p>
+              <p className="font-mono text-xs uppercase tracking-[0.14em] text-muted tabular">
+                {r.dates}
+              </p>
               <p className="label mt-3 !text-ink-soft">{r.org}</p>
               <p className="mt-1 text-sm text-muted">{r.role}</p>
-              <p className="display mt-8 text-[clamp(2.5rem,4.4vw,4rem)] text-accent">{r.readout.label}</p>
+              <p className="display mt-8 text-[clamp(2.5rem,4.4vw,4rem)] text-accent">
+                {r.readout.label}
+              </p>
               <p className="mt-2 font-mono text-[0.6875rem] text-muted">{r.readout.caption}</p>
             </Reveal>
 
@@ -42,7 +46,9 @@ export default function Research() {
               <ul className="mt-6 grid gap-2.5">
                 {r.details.map((d) => (
                   <li key={d} className="flex gap-3 font-mono text-xs text-ink-soft">
-                    <span aria-hidden="true" className="text-accent">→</span>
+                    <span aria-hidden="true" className="text-accent">
+                      →
+                    </span>
                     {d}
                   </li>
                 ))}
@@ -50,7 +56,10 @@ export default function Research() {
               {r.advisors ? <p className="mt-6 text-sm italic text-muted">{r.advisors}</p> : null}
             </Reveal>
 
-            <Reveal delay={0.16} className="frame-marks self-start border border-line bg-bg-raised/50 p-4 lg:col-span-4">
+            <Reveal
+              delay={0.16}
+              className="frame-marks self-start border border-line bg-bg-raised/50 p-4 lg:col-span-4"
+            >
               <ResearchFigure kind={r.figure} />
             </Reveal>
           </article>

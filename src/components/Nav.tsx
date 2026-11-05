@@ -31,7 +31,11 @@ export default function Nav() {
         aria-label="Primary"
         className="mx-auto flex h-16 max-w-[90rem] items-center justify-between gap-4 px-5 sm:px-8 lg:px-12"
       >
-        <a href="#top" className="flex items-center gap-2.5 text-ink" aria-label={`${site.name}, back to top`}>
+        <a
+          href="#top"
+          className="flex items-center gap-2.5 text-ink"
+          aria-label={`${site.name}, back to top`}
+        >
           <MuonMark className="size-7" />
           <span className="font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-ink-soft max-sm:hidden">
             {site.name}
@@ -42,7 +46,9 @@ export default function Nav() {
             {nav.map((item) => (
               <li
                 key={item.href}
-                className={item.href === "#projects" || item.href === "#contact" ? "" : "max-md:hidden"}
+                className={
+                  item.href === "#projects" || item.href === "#contact" ? "" : "max-md:hidden"
+                }
               >
                 <a
                   href={item.href}
