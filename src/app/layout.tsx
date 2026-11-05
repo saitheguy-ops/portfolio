@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Hanken_Grotesk, IBM_Plex_Mono, Instrument_Serif } from "next/font/google";
+import { Hanken_Grotesk, JetBrains_Mono, Instrument_Serif } from "next/font/google";
 import { site } from "@/content";
+import SmoothScroll from "@/components/SmoothScroll";
 import "./globals.css";
 
 // Fonts are downloaded at build time and self-hosted by next/font.
@@ -18,9 +19,10 @@ const sans = Hanken_Grotesk({
   display: "swap",
 });
 
-const mono = IBM_Plex_Mono({
-  variable: "--font-plex-mono",
-  subsets: ["latin"],
+const mono = JetBrains_Mono({
+  variable: "--font-jetbrains",
+  // Greek for μ, τ, Δ, Φ in the instrument readouts.
+  subsets: ["latin", "greek"],
   weight: ["400", "500"],
   display: "swap",
 });
@@ -84,6 +86,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="min-h-dvh">
+        <SmoothScroll />
         {children}
         <div className="grain" aria-hidden="true" />
       </body>

@@ -113,7 +113,7 @@ export const hero = {
     v: 2.992e8,
   } satisfies Readout,
   /** Small instrument annotations around the hero canvas. */
-  annotations: ["CMOS · dark-frame subtracted", "exp 1/30 s", "frame ∞"],
+  annotations: ["CMOS · dark-frame subtracted", "exp 1/30 s"],
 };
 
 export const about = {
@@ -183,6 +183,11 @@ export const experienceStats: Stat[] = [
 export const projectsIntro = {
   heading: "Projects, from 0.998c down to a 15-minute sprint.",
   body: "Five things I've built, ordered by how fast the thing they measure or move goes.",
+  readout: {
+    label: "0.998c → 0",
+    caption: "five projects, fastest first",
+    v: 2.992e8,
+  } satisfies Readout,
 };
 
 export const projects: Project[] = [
