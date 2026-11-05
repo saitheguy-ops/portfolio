@@ -18,6 +18,8 @@ const sans = Hanken_Grotesk({
   variable: "--font-hanken",
   subsets: ["latin"],
   display: "swap",
+  // Only the display serif (the hero name) is preloaded; the rest load on use.
+  preload: false,
 });
 
 const mono = JetBrains_Mono({
@@ -26,6 +28,7 @@ const mono = JetBrains_Mono({
   subsets: ["latin", "greek"],
   weight: ["400", "500"],
   display: "swap",
+  preload: false,
 });
 
 // On Vercel, use the production URL so link previews resolve; otherwise

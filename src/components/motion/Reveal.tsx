@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { Fragment } from "react";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -19,7 +19,7 @@ export function Reveal({
   y?: number;
   as?: "div" | "li" | "article";
 }) {
-  const Tag = motion[as];
+  const Tag = m[as];
   return (
     <Tag
       className={className}
@@ -47,7 +47,7 @@ export function Wipe({
   delay?: number;
 }) {
   return (
-    <motion.div
+    <m.div
       className={`relative overflow-hidden ${className}`}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
@@ -55,7 +55,7 @@ export function Wipe({
       transition={{ duration: 0.4, delay }}
     >
       {children}
-      <motion.div
+      <m.div
         aria-hidden="true"
         className="absolute inset-0 z-10 origin-right bg-bg"
         initial={{ scaleX: 1 }}
@@ -64,8 +64,8 @@ export function Wipe({
         transition={{ duration: 1.3, ease: [0.76, 0, 0.24, 1], delay: delay + 0.05 }}
       >
         <span className="absolute inset-y-0 left-0 w-px bg-accent shadow-[0_0_12px_var(--accent)]" />
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 }
 
@@ -86,7 +86,7 @@ export function SplitText({
 }) {
   const words = text.split(" ");
   return (
-    <motion.span
+    <m.span
       className={className}
       initial="hidden"
       whileInView="shown"
@@ -96,7 +96,7 @@ export function SplitText({
       {words.map((w, i) => (
         <Fragment key={i}>
           <span className="-mb-[0.1em] inline-block overflow-hidden pb-[0.1em] align-bottom">
-            <motion.span
+            <m.span
               className="inline-block"
               variants={{
                 hidden: { y: "105%", opacity: 0 },
@@ -105,11 +105,11 @@ export function SplitText({
               transition={{ duration: 1, ease: EASE }}
             >
               {w}
-            </motion.span>
+            </m.span>
           </span>
           {i < words.length - 1 ? " " : null}
         </Fragment>
       ))}
-    </motion.span>
+    </m.span>
   );
 }

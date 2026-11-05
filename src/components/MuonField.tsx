@@ -7,8 +7,9 @@ import { useEffect, useRef } from "react";
  *
  * - Tracks are either long streaks that cross the frame fast (a bright head
  *   with a fading tail) or short CMOS-style hits that flash and decay.
- * - The noise is a small pre-rendered tile, re-offset at ~12 Hz like a sensor
- *   reading out frames, so it costs one pattern fill per frame.
+ * - The sensor noise is a separate CSS layer (.hero-noise) that jumps between
+ *   offsets on the compositor, so the canvas only clears and strokes a few
+ *   lines per frame.
  * - The loop stops when the canvas is off-screen or the tab is hidden, and
  *   draws a single still frame when the user prefers reduced motion.
  */
@@ -28,7 +29,7 @@ type Track = {
   kind: "streak" | "hit";
 };
 
-type Palette = { track: string; accent: string; signal: string; field: string };
+type Palette = { track: string; accent: string; signal: string };
 
 function readPalette(): Palette {
   const s = getComputedStyle(document.documentElement);
@@ -38,30 +39,7 @@ function readPalette(): Palette {
     track: get("--track", "235 245 255"),
     accent: get("--track-accent", "92 198 255"),
     signal: get("--track-signal", "255 164 92"),
-    field: get("--field", "7 8 10"),
   };
-}
-
-function makeNoiseTile(field: string, light: boolean): HTMLCanvasElement {
-  const size = 192;
-  const tile = document.createElement("canvas");
-  tile.width = tile.height = size;
-  const ctx = tile.getContext("2d");
-  if (!ctx) return tile;
-  const img = ctx.createImageData(size, size);
-  const [fr, fg, fb] = field.split(" ").map(Number);
-  for (let i = 0; i < img.data.length; i += 4) {
-    // Mostly faint read noise, with rare brighter (or darker) pixels.
-    const r = Math.random();
-    const n = r > 0.9985 ? 70 + Math.random() * 90 : Math.random() * 14;
-    const v = light ? -n * 0.6 : n;
-    img.data[i] = fr + v;
-    img.data[i + 1] = fg + v;
-    img.data[i + 2] = fb + v * 1.08;
-    img.data[i + 3] = 255;
-  }
-  ctx.putImageData(img, 0, 0);
-  return tile;
 }
 
 export default function MuonField({
@@ -76,17 +54,15 @@ export default function MuonField({
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d", { alpha: false });
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     const frameEl = frameCounterId ? document.getElementById(frameCounterId) : null;
     const eventEl = eventCounterId ? document.getElementById(eventCounterId) : null;
 
+    const host = canvas.parentElement;
     let palette = readPalette();
-    let light = document.documentElement.dataset.theme === "light";
-    let tile = makeNoiseTile(palette.field, light);
-    let pattern = ctx.createPattern(tile, "repeat");
 
     let width = 0;
     let height = 0;
@@ -97,9 +73,7 @@ export default function MuonField({
     let visible = true;
     let last = 0;
     let nextSpawn = 0;
-    let noiseX = 0;
-    let noiseY = 0;
-    let lastNoise = 0;
+    let lastFrame = 0;
     let frame = 0;
     let events = 0;
 
@@ -157,27 +131,12 @@ export default function MuonField({
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
-      dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+      dpr = Math.min(window.devicePixelRatio || 1, rect.width < 640 ? 1.5 : 1.75);
       width = Math.max(1, Math.round(rect.width));
       height = Math.max(1, Math.round(rect.height));
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-
-    const drawField = () => {
-      ctx.fillStyle = `rgb(${palette.field})`;
-      ctx.fillRect(0, 0, width, height);
-      if (pattern) {
-        ctx.save();
-        // Draw the noise tile at device-pixel scale so it reads as sensor grain.
-        ctx.scale(1 / dpr, 1 / dpr);
-        ctx.translate(noiseX, noiseY);
-        ctx.fillStyle = pattern;
-        ctx.globalAlpha = light ? 0.55 : 0.9;
-        ctx.fillRect(-noiseX, -noiseY, width * dpr, height * dpr);
-        ctx.restore();
-      }
     };
 
     const drawTrack = (t: Track, now: number) => {
@@ -226,14 +185,13 @@ export default function MuonField({
     };
 
     const render = (now: number) => {
-      if (now - lastNoise > 83) {
-        lastNoise = now;
-        noiseX = Math.floor(Math.random() * 192);
-        noiseY = Math.floor(Math.random() * 192);
+      // The frame counter ticks at ~12 Hz, like a sensor reading out frames.
+      if (now - lastFrame > 83) {
+        lastFrame = now;
         frame += 1;
         if (frameEl) frameEl.textContent = String(frame).padStart(6, "0");
       }
-      drawField();
+      ctx.clearRect(0, 0, width, height);
       ctx.lineCap = "round";
       tracks = tracks.filter((t) => drawTrack(t, now));
     };
@@ -258,11 +216,13 @@ export default function MuonField({
     const start = () => {
       if (running || reduced.matches || !visible || document.hidden) return;
       running = true;
+      if (host) host.dataset.running = "true";
       last = performance.now();
       raf = requestAnimationFrame(loop);
     };
     const stop = () => {
       running = false;
+      if (host) host.dataset.running = "false";
       cancelAnimationFrame(raf);
     };
 
@@ -323,9 +283,6 @@ export default function MuonField({
     // Re-read colors when the theme changes.
     const mo = new MutationObserver(() => {
       palette = readPalette();
-      light = document.documentElement.dataset.theme === "light";
-      tile = makeNoiseTile(palette.field, light);
-      pattern = ctx.createPattern(tile, "repeat");
       tracks.forEach((t) => (t.color = palette.track));
       if (!running) {
         if (reduced.matches) stillFrame();
@@ -337,11 +294,17 @@ export default function MuonField({
       attributeFilter: ["data-theme"],
     });
 
-    // Start after the browser is idle so the canvas never competes with load.
+    // Start once the page has loaded and the browser is idle, so the canvas
+    // never competes with the first paint.
     const hasIdle = typeof window.requestIdleCallback === "function";
-    const idle = hasIdle
-      ? window.requestIdleCallback(start, { timeout: 1200 })
-      : globalThis.setTimeout(start, 300);
+    let idle: number | ReturnType<typeof setTimeout> = 0;
+    const schedule = () => {
+      idle = hasIdle
+        ? window.requestIdleCallback(start, { timeout: 2000 })
+        : globalThis.setTimeout(start, 600);
+    };
+    if (document.readyState === "complete") schedule();
+    else window.addEventListener("load", schedule, { once: true });
 
     return () => {
       stop();
@@ -349,6 +312,7 @@ export default function MuonField({
       io.disconnect();
       mo.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("load", schedule);
       reduced.removeEventListener("change", onMotionChange);
       if (hasIdle) window.cancelIdleCallback(idle as number);
       else globalThis.clearTimeout(idle);

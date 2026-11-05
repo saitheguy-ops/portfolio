@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
+import { m, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import { useRef } from "react";
 
 /**
@@ -59,7 +59,7 @@ export default function TrackDivider({
         fill="none"
       >
         <line x1="0" x2="1440" y1="65" y2="65" stroke="var(--line)" strokeDasharray="2 10" />
-        <motion.path
+        <m.path
           d={v.main}
           stroke="var(--ink)"
           strokeOpacity="0.55"
@@ -67,14 +67,14 @@ export default function TrackDivider({
           vectorEffect="non-scaling-stroke"
           style={{ pathLength: main }}
         />
-        <motion.path
+        <m.path
           d={v.branch}
           stroke="var(--accent)"
           strokeWidth="1.25"
           vectorEffect="non-scaling-stroke"
           style={{ pathLength: branch }}
         />
-        <motion.circle
+        <m.circle
           cx={v.vertex[0]}
           cy={v.vertex[1]}
           r="3.5"
@@ -83,7 +83,7 @@ export default function TrackDivider({
         />
       </svg>
       {label ? (
-        <motion.span
+        <m.span
           className="absolute top-0 font-mono text-[0.625rem] tracking-[0.12em] text-muted max-sm:hidden"
           style={{
             left: `calc(${(v.vertex[0] / 1440) * 100}% + 1rem)`,
@@ -91,7 +91,7 @@ export default function TrackDivider({
           }}
         >
           {label}
-        </motion.span>
+        </m.span>
       ) : null}
     </div>
   );

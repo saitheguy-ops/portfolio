@@ -92,7 +92,7 @@ export default function SpeedReadout() {
           >
             <span className="h-1.5 w-px bg-line-strong" />
             <span
-              className={`mt-1 text-[0.5rem] leading-none text-muted ${t.at === 0 ? "max-sm:hidden" : ""}`}
+              className={`mt-1 text-[0.5rem] leading-none text-muted ${t.label === "c" ? "" : "max-sm:hidden"}`}
             >
               {t.label}
             </span>

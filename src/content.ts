@@ -247,7 +247,7 @@ export const projects: Project[] = [
     tags: ["Next.js", "TypeScript", "Recharts", "SEC EDGAR"],
     scale: "≈ 320 km/h · air taxis",
     image: {
-      src: "/images/joby.png",
+      src: "/images/joby.webp",
       alt: "Screenshot of the JOBY Stock Pitch Builder briefing page",
     },
     links: {
@@ -269,7 +269,7 @@ export const projects: Project[] = [
     tags: ["Next.js", "TypeScript", "Claude API", "tool use"],
     scale: "Δt ≈ 1 ms · markets",
     image: {
-      src: "/images/finance-assistant.png",
+      src: "/images/finance-assistant.webp",
       alt: "Screenshot of the AI Finance Assistant chat",
     },
     links: {
@@ -291,7 +291,7 @@ export const projects: Project[] = [
     tags: ["Next.js", "Supabase", "Prisma", "mobile-first"],
     scale: "Δt = 15 min · focus",
     image: {
-      src: "/images/sprint.png",
+      src: "/images/sprint.webp",
       alt: "Screenshots of the Sprint focus app",
     },
     links: { code: "https://github.com/saitheguy-ops/sprint", live: "" },

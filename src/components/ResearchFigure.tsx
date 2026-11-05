@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { m } from "motion/react";
 
 const W = 420;
 const H = 260;
@@ -94,21 +94,21 @@ export default function ResearchFigure({ kind }: { kind: "decay" | "rotation" })
             stroke="var(--signal)"
             strokeDasharray="2 4"
           />
-          <motion.path
+          <m.path
             d={path(fast, 0, xmax, xmax, 1.05)}
             stroke="var(--muted)"
             strokeDasharray="3 5"
             fill="none"
             {...draw(0.3)}
           />
-          <motion.path
+          <m.path
             d={path(slow, 0, xmax, xmax, 1.05)}
             stroke="var(--muted)"
             strokeDasharray="3 5"
             fill="none"
             {...draw(0.45)}
           />
-          <motion.path
+          <m.path
             d={path((t) => fast(t) + slow(t), 0, xmax, xmax, 1.05)}
             stroke="var(--accent)"
             strokeWidth="1.8"
@@ -161,21 +161,21 @@ export default function ResearchFigure({ kind }: { kind: "decay" | "rotation" })
           y="v (km/s)"
           ticks={[0, 5, 10, 15].map((v) => ({ at: v / xmax, label: String(v) }))}
         />
-        <motion.path
+        <m.path
           d={path(kepler, 0.05, xmax, xmax, ymax)}
           stroke="var(--muted)"
           strokeDasharray="3 5"
           fill="none"
           {...draw(0.4)}
         />
-        <motion.path
+        <m.path
           d={path(observed, 0.05, xmax, xmax, ymax)}
           stroke="var(--accent)"
           strokeWidth="1.8"
           fill="none"
           {...draw(0)}
         />
-        <motion.circle
+        <m.circle
           cx={sunX}
           cy={sunY}
           r="4"

@@ -13,6 +13,7 @@ export default function Hero() {
       aria-labelledby="hero-title"
       className="relative isolate flex min-h-[640px] flex-col overflow-hidden h-svh"
     >
+      <div aria-hidden="true" className="hero-noise" />
       <MuonField frameCounterId="hero-frame" eventCounterId="hero-events" />
       {/* Soft falloff so text stays legible over the field. */}
       <div

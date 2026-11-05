@@ -31,7 +31,7 @@ export default function ThemeToggle() {
           /* storage unavailable: the choice lasts for this visit only */
         }
       }}
-      aria-label={`Switch to ${next} theme`}
+      aria-label={`${theme === "dark" ? "Dark" : "Light"} theme: switch to ${next}`}
       className="group inline-flex h-9 min-w-9 items-center justify-center gap-2 rounded-full border border-line px-3 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-muted transition-colors hover:border-line-strong hover:text-ink"
     >
       <span

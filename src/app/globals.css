@@ -123,11 +123,49 @@ html.lenis body {
   inset: 0;
   z-index: 60;
   opacity: var(--grain-opacity);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1.6 -0.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.6 0 0 0 0 0.6 0 0 0 0 0.6 0 0 0 1.4 -0.45'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
-[data-theme="light"] .grain {
-  mix-blend-mode: multiply;
+
+/* Hero sensor noise: an oversized grain layer that jumps between offsets at
+   ~12 Hz. Transform-only, so it runs on the compositor. */
+.hero-noise {
+  pointer-events: none;
+  position: absolute;
+  inset: -50%;
+  opacity: calc(var(--grain-opacity) * 3.2);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='1' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.75 0 0 0 0 0.82 0 0 0 0 0.9 0 0 0 2.2 -1.05'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  will-change: transform;
+}
+[data-theme="light"] .hero-noise {
+  filter: invert(1);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-noise {
+    animation: sensor 0.5s steps(1) infinite;
+  }
+  [data-running="false"] > .hero-noise {
+    animation-play-state: paused;
+  }
+}
+@keyframes sensor {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  17% {
+    transform: translate3d(-7%, 4%, 0);
+  }
+  33% {
+    transform: translate3d(5%, -9%, 0);
+  }
+  50% {
+    transform: translate3d(-11%, -3%, 0);
+  }
+  67% {
+    transform: translate3d(9%, 7%, 0);
+  }
+  83% {
+    transform: translate3d(-3%, 11%, 0);
+  }
 }
 
 /* Section anchors land below the fixed nav. */
@@ -308,8 +346,10 @@ section[id] {
  * Keyframes
  * ------------------------------------------------------------------ */
 @keyframes rise {
+  /* Starts partly visible so the name paints (and counts as LCP) at once. */
   from {
-    transform: translate3d(0, 105%, 0);
+    transform: translate3d(0, 55%, 0);
+    opacity: 0.35;
   }
   to {
     transform: none;

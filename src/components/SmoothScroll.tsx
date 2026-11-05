@@ -20,8 +20,8 @@ export default function SmoothScroll() {
         autoRaf: true,
         lerp: 0.11,
         smoothWheel: true,
-        // Let in-page anchor links glide, landing below the fixed nav.
-        anchors: { offset: -64 },
+        // In-page anchor links glide; section scroll-margin clears the nav.
+        anchors: true,
       });
     };
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "motion/react";
+import { m, useScroll, useTransform } from "motion/react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 // Pin only where there is room for a full card and motion is welcome.
@@ -71,7 +71,7 @@ function Pinned({ intro, cards }: { intro: React.ReactNode; cards: React.ReactNo
   return (
     <div ref={outer} className="relative" style={{ height: `calc(100svh + ${distance}px)` }}>
       <div className="sticky top-0 flex h-svh flex-col justify-center overflow-hidden pb-10 pt-16">
-        <motion.ol
+        <m.ol
           ref={track}
           style={{ x }}
           className="flex w-max items-center gap-[6vw] pl-12 pr-[10vw] will-change-transform"
@@ -82,7 +82,7 @@ function Pinned({ intro, cards }: { intro: React.ReactNode; cards: React.ReactNo
               {c}
             </li>
           ))}
-        </motion.ol>
+        </m.ol>
 
         <div
           aria-hidden="true"
@@ -92,7 +92,7 @@ function Pinned({ intro, cards }: { intro: React.ReactNode; cards: React.ReactNo
             fast
           </span>
           <div className="relative h-px flex-1 bg-line">
-            <motion.div
+            <m.div
               className="absolute inset-0 origin-left bg-accent"
               style={{ scaleX: progress }}
             />
