@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Hanken_Grotesk, JetBrains_Mono, Instrument_Serif } from "next/font/google";
 import { site } from "@/content";
 import SmoothScroll from "@/components/SmoothScroll";
+import Providers from "@/components/motion/Providers";
 import "./globals.css";
 
 // Fonts are downloaded at build time and self-hosted by next/font.
@@ -87,7 +88,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </head>
       <body className="min-h-dvh">
         <SmoothScroll />
-        {children}
+        <Providers>{children}</Providers>
         <div className="grain" aria-hidden="true" />
       </body>
     </html>

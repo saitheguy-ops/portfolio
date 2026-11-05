@@ -39,7 +39,7 @@ export default function Hero() {
         </p>
         <h1
           id="hero-title"
-          className="display mt-5 text-[clamp(3.4rem,11.5vw,11.5rem)] text-ink"
+          className="display mt-5 text-[clamp(3.5rem,16vw,6.5rem)] text-ink sm:text-[clamp(4rem,11.5vw,11.5rem)]"
         >
           {site.name.split(" ").map((part, i) => (
             <span key={part} className="rise-line">

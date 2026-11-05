@@ -32,7 +32,7 @@ export default function ThemeToggle() {
         }
       }}
       aria-label={`Switch to ${next} theme`}
-      className="group inline-flex h-9 items-center gap-2 rounded-full border border-line px-3 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-muted transition-colors hover:border-line-strong hover:text-ink"
+      className="group inline-flex h-9 min-w-9 items-center justify-center gap-2 rounded-full border border-line px-3 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-muted transition-colors hover:border-line-strong hover:text-ink"
     >
       <span
         aria-hidden="true"
@@ -44,7 +44,9 @@ export default function ThemeToggle() {
           }`}
         />
       </span>
-      <span suppressHydrationWarning>{theme === "dark" ? "Dark" : "Light"}</span>
+      <span suppressHydrationWarning className="max-sm:hidden">
+        {theme === "dark" ? "Dark" : "Light"}
+      </span>
     </button>
   );
 }
